@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import Logger from '../common/logger';
 import { HttpCode } from '../common/http.code';
 
-import UserDataSource from './user.data-source';
+import UserModel from './user.model';
 
 import * as UserError from './user.error';
 
@@ -17,12 +17,12 @@ class UserController {
     try {
       if (password !== confirmPassword) throw new UserError.InvalidParamsError('Passwords do not match.');
 
-      const userExists = await UserDataSource.findOne({ email });
+      const userExists = await UserModel.findOne({ email });
       if (userExists) throw new UserError.InvalidParamsError('User already exists.', { email });
 
       const passwordHash = await createPasswordHash(password);
 
-      const user = new UserDataSource({
+      const user = new UserModel({
         email,
         password: passwordHash
       });
@@ -41,7 +41,7 @@ class UserController {
     const { email, password } = req.body;
 
     try {
-      const user = await UserDataSource.findOne({ email });
+      const user = await UserModel.findOne({ email });
 
       if (!user) throw new UserError.NotFoundError('User is not registered.', { email });
 

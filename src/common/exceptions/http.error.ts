@@ -17,6 +17,6 @@ export class HttpError extends Error {
 
     this.name = args.name;
     this.status = args.status;
-    if(args.data) this.data = args.data;
+    if (args.data) this.data = args.data;
   }
 }

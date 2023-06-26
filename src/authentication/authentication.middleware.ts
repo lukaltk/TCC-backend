@@ -1,9 +1,6 @@
-import { ValidationSchema } from 'fastest-validator';
 import { Request, Response, NextFunction } from 'express';
 
 import Logger from '../common/logger';
-
-import { validate } from '../common/validator';
 
 import { ITokenParams, checkToken, getToken } from './authentication.helper';
 
@@ -25,7 +22,7 @@ export const verifyToken = async (request: Request, response: Response, next: Ne
 
     const user = await getUserById(userId);
 
-    if(!user) throw new UserNotFoundError('User not found.', { userId });
+    if (!user) throw new UserNotFoundError('User not found.', { userId });
 
     request.body.user = user;
 
@@ -34,9 +31,9 @@ export const verifyToken = async (request: Request, response: Response, next: Ne
   } catch (error) {
     Logger.error(error);
 
-    if(error instanceof HttpError) {
+    if (error instanceof HttpError) {
       next(error);
-    
+
     } else {
       next(new TokenNotValid('Access denied.'));
     }

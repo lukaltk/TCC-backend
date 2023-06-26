@@ -1,18 +1,24 @@
-export default class Sensor {
-  private _id: string;
-  private _userId: string;
+import { model, Schema } from 'mongoose';
 
-  constructor(_id: string, userId: string) {
-    this._id = _id;
-    this._userId = userId;
-  }
+const sensorSchema = new Schema(
+  {
+    _id: String,
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    positions: [
+      {
+        _id: false,
+        id: String,
+        x: Number,
+        y: Number
+      }
+    ]
+  },
+  { timestamps: true }
+);
 
-  get id() {
-    return this._id;
-  }
+const SensorDataSource = model('Sensor', sensorSchema);
 
-  get user() {
-    return this._userId;
-  }
-}
-
+export default SensorDataSource;

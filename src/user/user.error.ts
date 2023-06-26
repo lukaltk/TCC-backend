@@ -1,4 +1,4 @@
-import { HttpCode } from '../common/http.code'; 
+import { HttpCode } from '../common/http.code';
 import { HttpError, IHttpErrorArgs } from '../common/exceptions/http.error';
 
 abstract class UserError extends HttpError {

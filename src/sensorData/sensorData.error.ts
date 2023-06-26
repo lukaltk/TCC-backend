@@ -14,7 +14,7 @@ export class InvalidParamsError extends SensorError {
 }
 
 export class NotFoundError extends SensorError {
-  constructor(message = 'Sensor not found', data?: object) {
+  constructor(message = 'User not found', data?: object) {
     super({ status: HttpCode.NOT_FOUND, message, name: 'NOT_FOUND', data });
   }
 }
