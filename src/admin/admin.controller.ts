@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import Logger from '../common/logger';
 import { HttpCode } from '../common/http.code';
 
-import UserDataSource from '../user/user.data-source';
+import UserModel from '../user/user.model';
 
 import { Role } from '../user/user.model'
 
@@ -18,12 +18,12 @@ class AdminController {
     try {
       if (password !== confirmPassword) throw new AdminError.InvalidParamsError('Passwords do not match.');
 
-      const adminExists = await UserDataSource.findOne({ email });
+      const adminExists = await UserModel.findOne({ email });
       if (adminExists) throw new AdminError.InvalidParamsError('Admin already exists.', { email });
 
       const passwordHash = await createPasswordHash(password);
 
-      const admin = new UserDataSource({
+      const admin = new UserModel({
         email,
         password: passwordHash,
         role: Role.ADMIN
@@ -42,7 +42,7 @@ class AdminController {
   async getAllUsers(request: Request, response: Response, next: NextFunction) {
 
     try {
-      const users = await UserDataSource.find().select('-password');
+      const users = await UserModel.find().select('-password');
       return response.status(HttpCode.OK).send({ users });
 
     } catch (error) {

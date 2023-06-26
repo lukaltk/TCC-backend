@@ -1,6 +1,6 @@
-import UserDataSource from './user.data-source';
+import UserModel from './user.model';
 
 export const getUserById = async (id: string) => {
-  const user = UserDataSource.findById(id).select('-password');
+  const user = UserModel.findById(id).select('-password');
   return user;
 }

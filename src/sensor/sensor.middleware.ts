@@ -45,10 +45,12 @@ export const validateCreateRequestFields = (request: Request, response: Response
 
   const schema: ValidationSchema = {
     $$strict: true,
-    userId: { type: 'string' }
+    id: { type: 'string' },
+    userId: { type: 'string' },
+    user: { type: 'object', optional: true }
   };
 
-  const params = request.params;
+  const params = Object.assign(request.params, request.body);
 
   const errors = validate(schema, params);
 
@@ -111,6 +113,42 @@ export const validateDeleteRequestFields = (request: Request, response: Response
   };
 
   const params = request.params;
+
+  try {
+    const errors = validate(schema, params);
+
+    if (errors) throw new InvalidParamsError('Invalid params.', errors);
+
+    next();
+
+  } catch (error) {
+    Logger.error(error);
+    next(error);
+  }
+}
+
+export const validateUpdatePositionsRequestFields = (request: Request, response: Response, next: NextFunction) => {
+
+  const schema: ValidationSchema = {
+    $$strict: true,
+    id: { type: 'string' },
+    userId: { type: 'string' },
+    user: { type: 'object', optional: true },
+    positions: {
+      type: 'array',
+      items: {
+        type: 'object',
+        strict: true,
+        props: {
+          id: { type: 'string' },
+          x: { type: 'number' },
+          y: { type: 'number' }
+        }
+      }
+    }
+  };
+
+  const params = Object.assign(request.params, request.body);
 
   try {
     const errors = validate(schema, params);

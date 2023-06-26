@@ -9,19 +9,21 @@ import {
   validateCreateRequestFields,
   validateListRequestFields,
   validateDeleteRequestFields,
-  validateGetByIdRequestFields
+  validateGetByIdRequestFields,
+  validateUpdatePositionsRequestFields
 } from './sensor.middleware';
 
 const router = Router();
 
 router.route('/user/:userId/sensor')
-.all(verifyToken, verifyUserIdSameAsLogged)
+  .all(verifyToken, verifyUserIdSameAsLogged)
   .get(validateListRequestFields, SensorController.list)
   .post(validateCreateRequestFields, verifyUserIdSameAsLogged, SensorController.create);
 
 router.route('/user/:userId/sensor/:id')
   .all(verifyToken, verifyUserIdSameAsLogged)
   .get(validateGetByIdRequestFields, SensorController.getById)
+  .patch(validateUpdatePositionsRequestFields, SensorController.updatePositions)
   .delete(validateDeleteRequestFields, verifyOwnership, SensorController.delete);
 
 export default router;

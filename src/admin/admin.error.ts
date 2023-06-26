@@ -1,4 +1,4 @@
-import { HttpCode } from '../common/http.code'; 
+import { HttpCode } from '../common/http.code';
 import { HttpError, IHttpErrorArgs } from '../common/exceptions/http.error';
 
 abstract class AdminError extends HttpError {
@@ -37,7 +37,7 @@ export class NotFoundError extends AdminError {
 
 export class NotAdminError extends AdminError {
   constructor(message = 'The user is not an administrator.', data?: object) {
-    super({ status: HttpCode.UNAUTHORIZED, message, name: 'NOT_ADMIN', data})
+    super({ status: HttpCode.UNAUTHORIZED, message, name: 'NOT_ADMIN', data })
   }
 }
 

@@ -6,7 +6,7 @@ export const validate = (schema: ValidationSchema, object: object) => {
 
   const result = check(object);
 
-  if(result === true) return null;
+  if (result === true) return null;
 
   return result;
 }

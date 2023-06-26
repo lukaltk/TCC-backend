@@ -37,7 +37,7 @@ const format = winston.format.combine(
     (info) => {
       let format = `[${info.timestamp}] ${info.level}: ${info.message}`;
 
-      if(info instanceof Error) {
+      if (info instanceof Error) {
         const data = JSON.stringify(info);
 
         const errorData = `\n[${info.timestamp}] ${info.level}: ${data}`;

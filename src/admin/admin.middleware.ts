@@ -42,7 +42,7 @@ export const verifyAdmin = (request: Request, response: Response, next: NextFunc
     if (user.role !== Role.ADMIN) throw new NotAdminError();
 
     if (adminId !== user.id) throw new ForbiddenActionError('User is not the same as logged in.', { adminId });
-    
+
     next();
 
   } catch (error) {
